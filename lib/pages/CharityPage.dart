@@ -11,7 +11,7 @@ class CharityPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xfff5f5fd),
+        backgroundColor: Color.fromARGB(255, 194, 194, 194),
         appBar: AppBar(
           title: const Text(
             "Tbr3at",
@@ -66,18 +66,50 @@ class CharityPage extends StatelessWidget {
                     style:
                         TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
                 Container(
+                  width: 350,
+                  height: 200,
+                  margin: EdgeInsets.only(top: 20),
                   child: Card(
-                    elevation: 0,
+                    //color white
+                    elevation: 55,
+                    color: Color.fromARGB(255, 160, 231, 144),
+
                     shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        color: Theme.of(context).colorScheme.outline,
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
-                    child: const SizedBox(
-                      width: 300,
-                      height: 100,
-                      child: Center(child: Text('Outlined Card')),
+                    child: Container(
+                      margin: EdgeInsets.only(top: 20, left: 10),
+                      child: Row(
+                        children: [
+                          Column(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(top: 30),
+                                child: Text(
+                                  'Add Your Donation Needes',
+                                  textScaleFactor: 1.2,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(left: 35),
+                            child: Column(
+                              // add button to add to cart as icon
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.add_shopping_cart),
+                                  onPressed: () {},
+                                ),
+                                Text(
+                                  'Add to cart',
+                                  textScaleFactor: 1.2,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
