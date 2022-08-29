@@ -89,7 +89,7 @@ class _AnnouncementState extends State<Announcement> {
                               animation: true,
 
                               lineHeight: 23.0,
-                              animationDuration: 1000,
+                              animationDuration: 4000,
                               percent: 0.7,
                               center: Text("70.0%"),
                               linearStrokeCap: LinearStrokeCap.roundAll,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:tbr3at/pages/DetailPage.dart';
 import 'package:tbr3at/pages/HomePage.dart';
 import 'package:tbr3at/pages/LoginPage.dart';
 import 'package:tbr3at/pages/SignUpPage.dart';
@@ -33,10 +34,11 @@ class MyApp extends StatelessWidget {
 
   //AuthProvider ap = AuthProvider();
   final _router =
-  GoRouter(initialLocation: 1 == 2 ? "/signin" : "/", routes: [
+  GoRouter(initialLocation: 1 == 2 ? "/signin" : "/detailpage", routes: [
     GoRoute(path: "/", builder: (context, state) => SignUpPage()),
     GoRoute(path: "/signin", builder: (context, state) => LoginPage()),
     GoRoute(path: "/homepage", builder: (context, state) => HomePage()),
+    GoRoute(path: "/detailpage", builder: (context, state) => DetailPage()),
 
   ]);
 }
