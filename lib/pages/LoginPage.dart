@@ -3,6 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../models/user.dart';
+import '../providers/auth_provider.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   String username = "";
   bool _isLoading = false;
-
+  bool isUserPressed = false;
   String password = "";
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,6 +61,53 @@ class _LoginPageState extends State<LoginPage> {
                           fontSize: 20,
                           color: Colors.white
                       ),)
+                  ),
+                ],
+              ),
+            ),
+
+
+            Container(
+              padding: EdgeInsets.only(top: 40),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  RaisedButton(
+
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      onPressed: () {
+
+                        setState(() {
+                          isUserPressed = true;
+                        });
+
+                      },
+                      child: SizedBox(
+                        child: Text("User") ,
+
+                      ),
+
+                      color: isUserPressed == true ?
+                      Color(0xff46bbab) : Color(0Xffe4e4e4)
+                  ),
+                  SizedBox(width: 20,),
+                  RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          isUserPressed = false;
+
+                        });
+
+                      },
+                      child: SizedBox(
+                          child: Text("Charity")),
+                      color: isUserPressed == false ?
+                      Color(0xff46bbab) : Color(0Xffe4e4e4)
                   ),
                 ],
               ),
@@ -198,25 +248,25 @@ class _LoginPageState extends State<LoginPage> {
       _isLoading = true;
 
     });
-    // chk = await Provider.of<AuthProvider>(context, listen: false).signin(user: User(
-    //
-    //     username: username,
-    //     password: password,
-    // ));
-    //
-    // print(chk);
-    // if (chk)
-    // {
-    //   context.push("/homepage");
-    //   setState(() {
-    //     _isLoading = false;
-    //   });
-    //
-    // }
-    // else {
-    //   _isLoading = false;
-    // }
-    //
+    chk = await Provider.of<AuthProvider>(context, listen: false).signin(user: User(
+
+        username: username,
+        password: password,
+    ));
+
+    print(chk);
+    if (chk)
+    {
+      context.push("/homepage");
+      setState(() {
+        _isLoading = false;
+      });
+
+    }
+    else {
+      _isLoading = false;
+    }
+
 
 
 
