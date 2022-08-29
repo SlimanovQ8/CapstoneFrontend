@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:tbr3at/widgets/HomePageWidgets/CharitNavBar.dart';
 
 import '../widgets/HomePageWidgets/BottomNavBar.dart';
 
@@ -37,19 +38,21 @@ class CharityPage extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               DrawerHeader(
+                //add image of the charity in drawer header_bar
+
                 child: Text('Charity name'),
                 decoration: BoxDecoration(
                   color: Colors.green,
                 ),
               ),
               ListTile(
-                title: Text('Item 1'),
+                title: Text('Setting'),
                 onTap: () {
                   Navigator.pop(context);
                 },
               ),
               ListTile(
-                title: Text('Item 2'),
+                title: Text('Logout'),
                 onTap: () {
                   Navigator.pop(context);
                 },
@@ -84,29 +87,36 @@ class CharityPage extends StatelessWidget {
                           Column(
                             children: [
                               Container(
-                                margin: EdgeInsets.only(top: 30),
+                                margin: EdgeInsets.only(top: 10),
                                 child: Text(
-                                  'Add Your Donation Needes',
+                                  'Add Your Donation Adds Here.',
+                                  textScaleFactor: 1.2,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 25),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        top: 20,
+                                      ),
+                                      child: Text(
+                                        'Use the  (+)  sign in the bottom to add ',
+                                        textScaleFactor: 1.2,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 20),
+                                child: Text(
+                                  'donation for the users to donate.',
                                   textScaleFactor: 1.2,
                                 ),
                               ),
                             ],
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 35),
-                            child: Column(
-                              // add button to add to cart as icon
-                              children: [
-                                IconButton(
-                                  icon: Icon(Icons.add_shopping_cart),
-                                  onPressed: () {},
-                                ),
-                                Text(
-                                  'Add to cart',
-                                  textScaleFactor: 1.2,
-                                ),
-                              ],
-                            ),
                           ),
                         ],
                       ),
@@ -117,7 +127,7 @@ class CharityPage extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: const BottomBar(),
+        bottomNavigationBar: const CharityBar(),
       ),
     );
   }
