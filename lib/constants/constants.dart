@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 const Color white = Colors.white;
 const Color black = Colors.black;
 const Color red = Colors.red;
-const Color AppButtons =  Color(0xff46bbab);
+const Color AppButtons =  Color(0xff15b2bf);
 Color primaryColor = const Color(0xFF4B39EF);
 Color secondaryColor = const Color(0xFF39D2C0);
 Color tertiaryColor = const Color(0xFFEE8B60);

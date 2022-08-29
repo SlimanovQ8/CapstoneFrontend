@@ -18,12 +18,14 @@ class _SignUpPageState extends State<SignUpPage> {
   String email = "";
   String password = "";
   bool _isLoading = false;
+  bool isUserPressed = true;
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffF8F8F8),
       body: Container(
         child: ListView(
           children: [
+
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 3.0,
@@ -63,10 +65,55 @@ class _SignUpPageState extends State<SignUpPage> {
                 ],
               ),
             ),
+            Container(
+              padding: EdgeInsets.only(top: 40),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  RaisedButton(
+
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      onPressed: () {
+
+                        setState(() {
+                          isUserPressed = true;
+                        });
+
+                      },
+                      child: SizedBox(
+                        child: Text("User") ,
+
+                      ),
+
+                      color: isUserPressed == true ?
+                      Color(0xff46bbab) : Color(0Xffe4e4e4)
+                  ),
+                  SizedBox(width: 20,),
+                  RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          isUserPressed = false;
+
+                        });
+
+                      },
+                      child: SizedBox(
+                          child: Text("Charity")),
+                      color: isUserPressed == false ?
+                      Color(0xff46bbab) : Color(0Xffe4e4e4)
+                  ),
+                ],
+              ),
+            ),
       Container(
         //color: Colors.red,
         width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.only(top: 62),
+        padding: EdgeInsets.only(top: 40),
         child: Column(
           children: <Widget>[
             Container(

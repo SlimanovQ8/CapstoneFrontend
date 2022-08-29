@@ -24,7 +24,7 @@ class _SearchBarState extends State<SearchBar> {
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide.none),
-              hintText: 'Search',
+              hintText: 'Find Category or Campaign name',
               hintStyle: TextStyle(color: Colors.grey, fontSize: 18),
               prefixIcon: Container(
                 padding: EdgeInsets.all(15),
