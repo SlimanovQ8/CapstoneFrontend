@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:tbr3at/widgets/HomePageWidgets/CharitNavBar.dart';
 
 import '../widgets/HomePageWidgets/BottomNavBar.dart';
 
@@ -11,7 +12,7 @@ class CharityPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xfff5f5fd),
+        backgroundColor: Color.fromARGB(255, 194, 194, 194),
         appBar: AppBar(
           title: const Text(
             "Tbr3at",
@@ -37,19 +38,21 @@ class CharityPage extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               DrawerHeader(
+                //add image of the charity in drawer header_bar
+
                 child: Text('Charity name'),
                 decoration: BoxDecoration(
                   color: Colors.green,
                 ),
               ),
               ListTile(
-                title: Text('Item 1'),
+                title: Text('Setting'),
                 onTap: () {
                   Navigator.pop(context);
                 },
               ),
               ListTile(
-                title: Text('Item 2'),
+                title: Text('Logout'),
                 onTap: () {
                   Navigator.pop(context);
                 },
@@ -66,18 +69,57 @@ class CharityPage extends StatelessWidget {
                     style:
                         TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
                 Container(
+                  width: 350,
+                  height: 200,
+                  margin: EdgeInsets.only(top: 20),
                   child: Card(
-                    elevation: 0,
+                    //color white
+                    elevation: 55,
+                    color: Color.fromARGB(255, 160, 231, 144),
+
                     shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        color: Theme.of(context).colorScheme.outline,
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
-                    child: const SizedBox(
-                      width: 300,
-                      height: 100,
-                      child: Center(child: Text('Outlined Card')),
+                    child: Container(
+                      margin: EdgeInsets.only(top: 20, left: 10),
+                      child: Row(
+                        children: [
+                          Column(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(top: 10),
+                                child: Text(
+                                  'Add Your Donation Adds Here.',
+                                  textScaleFactor: 1.2,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 25),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        top: 20,
+                                      ),
+                                      child: Text(
+                                        'Use the  (+)  sign in the bottom to add ',
+                                        textScaleFactor: 1.2,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 20),
+                                child: Text(
+                                  'donation for the users to donate.',
+                                  textScaleFactor: 1.2,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -85,7 +127,7 @@ class CharityPage extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: const BottomBar(),
+        bottomNavigationBar: const CharityBar(),
       ),
     );
   }
