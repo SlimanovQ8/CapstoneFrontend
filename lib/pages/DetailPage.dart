@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:tbr3at/widgets/DetailPageWidgets/bottomNavBarWidget.dart';
 
 import '../constants/constants.dart';
 import '../widgets/DetailPageWidgets/ImageFlipperWidget.dart';
@@ -73,9 +74,7 @@ class _DetailPageState extends State<DetailPage> {
                       ],
                     ),
                   ),
-                  Divider(
-                    thickness: 2,
-                  ),
+
                   Container(
                     margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     padding: EdgeInsets.all(10),
@@ -107,24 +106,132 @@ class _DetailPageState extends State<DetailPage> {
                     ),
                   ),
                   Container(
-                    child: Row(
+
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    child: Card(
+
+                      shape: RoundedRectangleBorder(
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+
+                          Container(
+                            padding: EdgeInsets.only(left: 20, bottom: 10),
+                            alignment: Alignment.center,
+                            child: Row(
+
+                              children: [
+                                Text(
+                                  'Donation Raised ',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          SizedBox(
+                            height: 4,
+                          ),
+                          Container(
+                            child: Row(
+                              children: [
+                                LinearPercentIndicator(
+                                  width: MediaQuery.of(context).size.width - 70,
+                                  animation: true,
+
+                                  lineHeight: 7.0,
+                                  trailing: Text("70%"),
+                                  animationDuration: 4000,
+                                  percent: 0.7,
+                                  linearStrokeCap: LinearStrokeCap.roundAll,
+                                  progressColor: Color(0xff24a6b4),
+                                ),
+
+                              ],
+                            ),
+
+
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(left: 20, bottom: 10, top: 10),
+                            alignment: Alignment.center,
+                            child: Row(
+
+                              children: [
+                                Text(
+                                  '3500/5000 KD',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      ),
+                  ),
+
+                  Container(
+                    margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+
                       children: [
-                        LinearPercentIndicator(
-                          width: MediaQuery.of(context).size.width - 50,
-                          animation: true,
-
-                          lineHeight: 23.0,
-                          animationDuration: 4000,
-                          percent: 0.7,
-                          center: Text("70.0%"),
-                          linearStrokeCap: LinearStrokeCap.roundAll,
-                          progressColor: Color(0xff24a6b4),
+                        Container(
+                          padding: EdgeInsets.only(bottom:8),
+                          child: Text("Organized By", style: TextStyle(
+                              fontSize: 20
+                          ),),
                         ),
+                        Card(
+                          elevation: 0.0,
+                          child: Container(
+                            height: 80,
+                            decoration: BoxDecoration(
+                                color: Colors.white),
+                            child: ListTile(
+                              leading: Container(
+                                padding: EdgeInsets.only(right: 12.0),
+                                // decoration: new BoxDecoration(
+                                //     border: new Border(
+                                //         right: new BorderSide(
+                                //             width: 1.0, color: Colors.black))),
+                                child:  Container(
+                                  //padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                                  child:   ClipRRect(
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: Image.asset(
+                                      'assets/images/al3oonb.jpg',
+                                      width: 65,
+                                      height: 65,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              title: Text("Aloun Charity"
+                              ),
+                              subtitle: Text( "Verified Organizer", style: TextStyle(color: AppButtons),
+                              ),
 
+                              onTap: () {
+
+                              },
+                            ),
+                          ),
+                        ),
                       ],
                     ),
-
                   ),
+
 
 
                 ],
@@ -132,7 +239,7 @@ class _DetailPageState extends State<DetailPage> {
         ],
       ),
 
-
+  bottomNavigationBar: BottomNavBar(),
 
 
     );

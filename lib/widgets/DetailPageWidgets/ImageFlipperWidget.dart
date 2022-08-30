@@ -21,30 +21,22 @@ class _ImageFlipperState extends State<ImageFlipper> {
       Container(
         margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
         width: double.infinity,
+                  height: 180,
 
 
-        child: Stack(
-          children: [
-            PageView(
 
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
                   child: Image.asset(
                     'assets/images/campaign.jfif',
                     width: 100,
                     height: double.infinity,
                     fit: BoxFit.cover,
                   ),
-                ),
 
 
-              ],
-            ),
 
 
-          ],
-        ),
+
+
       );
   }
 }

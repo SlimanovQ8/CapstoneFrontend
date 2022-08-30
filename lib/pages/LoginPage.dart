@@ -68,51 +68,6 @@ class _LoginPageState extends State<LoginPage> {
 
 
             Container(
-              padding: EdgeInsets.only(top: 40),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  RaisedButton(
-
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                      ),
-                      onPressed: () {
-
-                        setState(() {
-                          isUserPressed = true;
-                        });
-
-                      },
-                      child: SizedBox(
-                        child: Text("User") ,
-
-                      ),
-
-                      color: isUserPressed == true ?
-                      Color(0xff46bbab) : Color(0Xffe4e4e4)
-                  ),
-                  SizedBox(width: 20,),
-                  RaisedButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          isUserPressed = false;
-
-                        });
-
-                      },
-                      child: SizedBox(
-                          child: Text("Charity")),
-                      color: isUserPressed == false ?
-                      Color(0xff46bbab) : Color(0Xffe4e4e4)
-                  ),
-                ],
-              ),
-            ),
-            Container(
               //color: Colors.red,
               width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.only(top: 62),

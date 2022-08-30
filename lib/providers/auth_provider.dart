@@ -5,14 +5,15 @@ import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/user.dart';
+import '../models/userProfile.dart';
 import '../services/auth_services.dart';
 
 
 class AuthProvider extends ChangeNotifier {
   String token = "";
   late User user;
-  // late UserProfile profile;
-  // List <UserProfile> getUseProfile = [];
+  late UserProfile profile;
+  List <UserProfile> getUseProfile = [];
   bool isSignedIn = false;
   List <User> users = [];
 
@@ -20,7 +21,7 @@ class AuthProvider extends ChangeNotifier {
     users = await AuthServices().getUsers(id);
   }
   Future <void> getUserProfile(int id) async {
-    // getUseProfile = await AuthServices().getUsserInfo(id);
+     getUseProfile = await AuthServices().getUsserInfo(id);
   }
   Future <bool> signup({required User user}) async {
     token = await AuthServices().signup(user: user);
@@ -35,7 +36,19 @@ class AuthProvider extends ChangeNotifier {
     else
       return false;
   }
+  Future <bool> CharitySignUp({required User user}) async {
+    token = await AuthServices().Charitysignup(user: user);
 
+
+    isSignedIn = await signin(user: user);
+
+
+
+    if(isSignedIn)
+      return true;
+    else
+      return false;
+  }
   Future <bool> signin({required User user}) async {
     token = await AuthServices().signin(user: user);
     if(token.length > 2) {
@@ -77,8 +90,8 @@ class AuthProvider extends ChangeNotifier {
 
     notifyListeners();
   }
-  // Future<void> getProfile(int id) async {
-  //   profile = await AuthServices().getUserProfileServices(id);
-  // }
+  Future<void> getProfile(int id) async {
+    profile = await AuthServices().getUserProfileServices(id);
+  }
 
 }

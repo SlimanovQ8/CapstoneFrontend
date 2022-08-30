@@ -4,7 +4,7 @@ part 'user.g.dart';
 
 class User {
   int? id;
-  String? first_name;
+  String? name;
   String? email;
   String? username;
   String? password;
@@ -14,12 +14,15 @@ class User {
   String? charityname;
   String? phone;
   double? rating;
-  int? userID ;
+  int? numOfDonation;
+  int? points;
+  String? image;
+  int? userID;
 
   User({
     this.id,
     this.userID,
-    this.first_name,
+    this.name,
     this.email,
     this.username,
     this.password,
@@ -29,6 +32,9 @@ class User {
     this.phone,
     this.location,
     this.rating,
+    this.points,
+    this.image,
+    this.numOfDonation,
   });
 
 
