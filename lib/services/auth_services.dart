@@ -138,4 +138,3 @@ class AuthServices {
     return check;
   }
 }
-

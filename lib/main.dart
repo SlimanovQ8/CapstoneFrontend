@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
 
   //AuthProvider ap = AuthProvider();
   final _router =
-  GoRouter(initialLocation: 1 == 2 ? "/signin" : "/detailpage", routes: [
+  GoRouter(initialLocation: 1 == 2 ? "/signin" : "/homepage", routes: [
     GoRoute(path: "/", builder: (context, state) => SignUpPage()),
     GoRoute(path: "/signin", builder: (context, state) => LoginPage()),
     GoRoute(path: "/homepage", builder: (context, state) => HomePage()),
