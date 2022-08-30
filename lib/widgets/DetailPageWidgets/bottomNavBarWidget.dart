@@ -16,37 +16,21 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return  Container(
       color: Colors.white,
       child: Container(
-        height: 80,
-        margin: EdgeInsets.symmetric( horizontal: 12),
+        margin: EdgeInsets.symmetric( vertical: 10, horizontal: 12),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
 
-              children: [
-                Container(
-
-
-                     child: Text("100 KD/ Per day", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)
-                    ),
-                Container(
-
-
-                    child: Text("3000 KD/ Per month", style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),)
-                ),
-              ],
-            ),
 
 
 
             ElevatedButton(
 
                   style: ElevatedButton.styleFrom(
-                    fixedSize: Size(150, 40),
+                    fixedSize: Size(350, 40),
                     primary: AppButtons
                   ),
-                  child: Text("Rent"),
+                  child: Text("Donate Now"),
                   onPressed: () {},
                 )
 

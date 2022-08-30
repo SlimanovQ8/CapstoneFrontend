@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:tbr3at/models/charity.dart';
+
+import '../models/user.dart';
+import '../providers/auth_provider.dart';
 
 
 class SignUpPage extends StatefulWidget {
@@ -17,6 +21,8 @@ class _SignUpPageState extends State<SignUpPage> {
   String username = "";
   String email = "";
   String password = "";
+  String phone = "";
+  String location = "";
   bool _isLoading = false;
   bool isUserPressed = true;
   Widget build(BuildContext context) {
@@ -134,7 +140,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   border: InputBorder.none,
                   icon: Icon(Icons.person,
                       color:  Color(0xff46bbab)),
-                  hintText: 'Name',
+                  hintText: isUserPressed? 'Name' : 'Charity Name',
                 ),
                 onChanged: (value) {
                   setState(() {
@@ -175,7 +181,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 },
               ),
             ),
-            Container(
+            isUserPressed ? Container(
               width: MediaQuery.of(context).size.width / 1.2,
               height: 45,
               margin: EdgeInsets.only(top: 20),
@@ -203,8 +209,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   });
                 },
               ),
-            ),
-
+            )
+            : Container()
+,
             Container(
               width: MediaQuery.of(context).size.width / 1.2,
               height: 45,
@@ -230,6 +237,62 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 onChanged: (value) {
                   password = value;
+                },
+              ),
+            ),
+
+            Container(
+              width: MediaQuery.of(context).size.width / 1.2,
+              height: 45,
+              margin: EdgeInsets.only(top: 20),
+              padding:
+              EdgeInsets.only(top: 4, left: 16, right: 16, bottom: 4),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 2)
+                  ]),
+              child: TextField(
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  icon: Icon(Icons.phone,
+                      color:  Color(0xff46bbab)
+                  ),
+                  hintText: 'Phone',
+                ),
+                onChanged: (value) {
+                  phone = value;
+                },
+              ),
+            ),
+
+            Container(
+              width: MediaQuery.of(context).size.width / 1.2,
+              height: 45,
+              margin: EdgeInsets.only(top: 20),
+              padding:
+              EdgeInsets.only(top: 4, left: 16, right: 16, bottom: 4),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 2)
+                  ]),
+              child: TextField(
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  icon: Icon(Icons.location_on,
+                      color:  Color(0xff46bbab)
+                  ),
+                  hintText: 'Location',
+                ),
+                onChanged: (value) {
+                  location = value;
                 },
               ),
             ),
@@ -264,7 +327,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   print(email);
                   print(username);
                   print(password);
-                  SignUp(name, email, username, password);
+
+                 isUserPressed?  SignUp(name, email, username, password, phone, location): CharitySignUp(name, email, password, phone, location);
 
                 },
               ),
@@ -292,7 +356,7 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
-  void SignUp(String name, String email, String username, String password, ) async {
+  void SignUp(String name, String email, String username, String password, String phone, String location ) async {
     print("j");
     bool? chk;
 
@@ -300,25 +364,62 @@ class _SignUpPageState extends State<SignUpPage> {
       _isLoading = true;
 
     });
-    // chk = await Provider.of<AuthProvider>(context, listen: false).signup(user: User(
-    //   first_name: name,
-    //   email: email,
-    //   username: username,
-    //   password: password,
-    // ));
-    // print(chk);
-    // if (chk)
-    //   {
-    //     context.push("/homepage");
-    //     setState(() {
-    //       _isLoading = false;
-    //     });
-    //
-    //  }
-    // else {
-    //   _isLoading = false;
-    //   }
-    //
+    chk = await Provider.of<AuthProvider>(context, listen: false).signup(user: User(
+      name: name,
+      email: email,
+      username: username,
+      password: password,
+      phone: phone,
+      image: "1",
+      location: location,
+    ));
+    print(chk);
+    if (chk)
+      {
+        context.push("/homepage");
+        setState(() {
+          _isLoading = false;
+        });
+
+     }
+    else {
+      _isLoading = false;
+      }
+
 
   }
+  void CharitySignUp(String name, String email, String password, String phone, String location ) async {
+    print("j");
+    bool? chk;
+
+    setState(() {
+      _isLoading = true;
+
+    });
+    chk = await Provider.of<AuthProvider>(context, listen: false).CharitySignUp(user: User(
+      charityname: name,
+      email: email,
+      username: name,
+      name: name,
+      password: password,
+      phone: phone,
+      image: "1",
+      location: location,
+    ));
+    print(chk);
+    if (chk)
+    {
+      context.push("/homepage");
+      setState(() {
+        _isLoading = false;
+      });
+
+    }
+    else {
+      _isLoading = false;
+    }
+
+
+  }
+
 }
