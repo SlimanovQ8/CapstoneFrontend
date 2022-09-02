@@ -17,8 +17,19 @@ class AuthServices {
     String token = "";
     print(user);
     try {
+
+      FormData data = FormData.fromMap({
+        "username": user.username,
+        "password": user.password,
+        "email": user.email,
+        "phone": user.phone,
+        "name": user.name,
+        "location": user.location,
+
+        "image": await MultipartFile.fromFile(user.image!),
+      });
       Response response =
-      await _dio.post(_baseUrl + '/register-user/', data: user.toJson());
+      await _dio.post(_baseUrl + '/register-user/', data: data);
       //token = response.data["access"];
 
       print(response.data);
@@ -33,8 +44,20 @@ class AuthServices {
     String token = "";
     print(user);
     try {
+
+      FormData data = FormData.fromMap({
+        "username": user.name,
+        "charityname": user.name,
+        "password": user.password,
+        "email": user.email,
+        "phone": user.phone,
+        "name": user.name,
+        "location": user.location,
+
+        "image": await MultipartFile.fromFile(user.image!),
+      });
       Response response =
-      await _dio.post(_baseUrl + '/register-charity/', data: user.toJson());
+      await _dio.post(_baseUrl + '/register-charity/', data: data);
       //token = response.data["access"];
 
       print(response.data);

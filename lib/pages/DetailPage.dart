@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:tbr3at/models/annoucement.dart';
 import 'package:tbr3at/widgets/DetailPageWidgets/bottomNavBarWidget.dart';
+import 'package:tbr3at/widgets/HomePageWidgets/Annoucements.dart';
 
 import '../constants/constants.dart';
 import '../widgets/DetailPageWidgets/ImageFlipperWidget.dart';
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({Key? key}) : super(key: key);
+  final Annoucement annoucement;
+  const DetailPage({Key? key,
+    required this.annoucement,
+  }) : super(key: key);
 
   @override
   _DetailPageState createState() => _DetailPageState();
@@ -14,12 +19,22 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   @override
+
   Widget build(BuildContext context) {
+    final annoucementEndDate = DateTime.parse(widget.annoucement.duration!);
+    final Date = DateTime.now();
+
+    int quantity = widget.annoucement.quantity!;
+    int remaining = widget.annoucement.remaining!;
+    double Remaining = (quantity - remaining) / quantity;
+    int Full = (quantity - remaining) ;
+    print(Remaining);
+    final remainingDays = daysBetween(Date, annoucementEndDate);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xffffffff),
         elevation: 0,
-        title: Text("Detail", style: TextStyle(
+        title: Text(widget.annoucement.name!, style: TextStyle(
           color: Colors.black
         ),),
         centerTitle: true,
@@ -43,7 +58,7 @@ class _DetailPageState extends State<DetailPage> {
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
                 children: [
-                  ImageFlipper(),
+                  ImageFlipper(annoucement: widget.annoucement),
                   Container(
                     margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     padding: EdgeInsets.all(10),
@@ -55,13 +70,14 @@ class _DetailPageState extends State<DetailPage> {
                       children: [
                         Container(
                           padding: EdgeInsets.only(bottom:8),
-                          child: Text("Campaign Name", style: TextStyle(
+                          child: Text(widget.annoucement.name!, style: TextStyle(
                               fontSize: 20
                           ),),
                         ),
                         Container(
                           child: Text(
-                            "5 Days Left",
+                            "${remainingDays} Days Left",
+
                             //overflow: TextOverflow.ellipsis,
 
                             style: TextStyle(
@@ -91,8 +107,7 @@ class _DetailPageState extends State<DetailPage> {
                           ),),
                         ),
                         Container(
-                          child: Text(
-                            "We Know what happend in Palestine. Many Casualities and a lot of infrastructure was destroyed by the Israeli army. But not many know about this fact...",
+                          child: Text(widget.annoucement.description!,
                             //overflow: TextOverflow.ellipsis,
 
                             style: TextStyle(
@@ -140,13 +155,13 @@ class _DetailPageState extends State<DetailPage> {
                             child: Row(
                               children: [
                                 LinearPercentIndicator(
-                                  width: MediaQuery.of(context).size.width - 70,
+                                  width: MediaQuery.of(context).size.width - 90,
                                   animation: true,
 
                                   lineHeight: 7.0,
-                                  trailing: Text("70%"),
-                                  animationDuration: 4000,
-                                  percent: 0.7,
+                                  trailing: Text("${Remaining * 100} %" ),
+                                  animationDuration: 1000,
+                                  percent: Remaining,
                                   linearStrokeCap: LinearStrokeCap.roundAll,
                                   progressColor: Color(0xff24a6b4),
                                 ),
@@ -163,7 +178,7 @@ class _DetailPageState extends State<DetailPage> {
 
                               children: [
                                 Text(
-                                  '3500/5000 KD',
+                                  '${Full} / ${widget.annoucement.quantity} ',
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -208,8 +223,9 @@ class _DetailPageState extends State<DetailPage> {
                                   //padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
                                   child:   ClipRRect(
                                     borderRadius: BorderRadius.circular(100),
-                                    child: Image.asset(
-                                      'assets/images/al3oonb.jpg',
+                                    child: Image.network(
+                                      widget.annoucement.charity_name!.image!,
+
                                       width: 65,
                                       height: 65,
                                       fit: BoxFit.cover,
@@ -217,7 +233,7 @@ class _DetailPageState extends State<DetailPage> {
                                   ),
                                 ),
                               ),
-                              title: Text("Aloun Charity"
+                              title: Text(widget.annoucement.charity_name!.name!
                               ),
                               subtitle: Text( "Verified Organizer", style: TextStyle(color: AppButtons),
                               ),

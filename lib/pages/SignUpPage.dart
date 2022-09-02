@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:tbr3at/models/charity.dart';
 
@@ -17,6 +21,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   @override
+
   String name = "";
   String username = "";
   String email = "";
@@ -25,7 +30,29 @@ class _SignUpPageState extends State<SignUpPage> {
   String location = "";
   bool _isLoading = false;
   bool isUserPressed = true;
+  File? _image;
+
+  bool isEmailValid = true;
+  bool isPhoneValid = true;
+  bool isUsernameValid = true;
+  bool chk = false;
+  final ImagePicker imagePicker = ImagePicker();
+  List<XFile>? imageFileList = [];
+  void selectImages() async {
+    final List<XFile>? selectedImages = await imagePicker.pickMultiImage();
+    if (selectedImages!.isNotEmpty) {
+      imageFileList!.addAll(selectedImages);
+    }
+    setState(() {});
+  }
   Widget build(BuildContext context) {
+
+    final _picker = ImagePicker();
+
+    Size size = MediaQuery.of(context).size;
+
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Color(0xffF8F8F8),
       body: Container(
@@ -196,7 +223,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         color: Colors.grey,
                         blurRadius: 2)
                   ]),
-              child: TextField(
+              child: TextFormField(
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   icon: Icon(Icons.person,
@@ -208,6 +235,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     username = value;
                   });
                 },
+
               ),
             )
             : Container()
@@ -258,11 +286,20 @@ class _SignUpPageState extends State<SignUpPage> {
               child: TextField(
                 decoration: InputDecoration(
                   border: InputBorder.none,
+
                   icon: Icon(Icons.phone,
                       color:  Color(0xff46bbab)
                   ),
                   hintText: 'Phone',
+
                 ),
+                keyboardType: TextInputType.number,
+
+                inputFormatters: <TextInputFormatter> [
+                  FilteringTextInputFormatter.digitsOnly
+
+
+                ],
                 onChanged: (value) {
                   phone = value;
                 },
@@ -296,6 +333,70 @@ class _SignUpPageState extends State<SignUpPage> {
                 },
               ),
             ),
+
+            SizedBox(
+              height: 10,
+            ),
+            Center(
+              child: Stack(
+                children: [
+                  Container(
+                    width: 130,
+                    height: 130,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            width: 4,
+                            color: Theme.of(context).scaffoldBackgroundColor),
+                        boxShadow: [
+                          BoxShadow(
+                              spreadRadius: 2,
+                              blurRadius: 10,
+                              color: Colors.black.withOpacity(0.1),
+                              offset: Offset(0, 10))
+                        ],
+                        shape: BoxShape.rectangle,
+                        image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image:  chk == true ? FileImage(_image!) as ImageProvider : AssetImage("assets/images/user.png") as ImageProvider
+                            )),
+                  ),
+                  Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            width: 4,
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                          ),
+                          color: Colors.green,
+                        ),
+                        child: GestureDetector(
+                          onTap: () async {
+                            final XFile? image = await _picker.pickImage(
+                                source: ImageSource.gallery);
+                            setState(() {
+                              _image = File(image!.path);
+                              print(_image);
+
+                              chk = true;
+                            });
+
+                          },
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.white,
+
+                          ),
+                        ),
+                      )),
+                ],
+              ),
+            ),
+
     ]
         ),
       ),
@@ -328,7 +429,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   print(username);
                   print(password);
 
-                 isUserPressed?  SignUp(name, email, username, password, phone, location): CharitySignUp(name, email, password, phone, location);
+                 isUserPressed?  SignUp(name, email, username, password, phone, location, _image!): CharitySignUp(name, email, password, phone, location, _image!);
 
                 },
               ),
@@ -356,7 +457,7 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
-  void SignUp(String name, String email, String username, String password, String phone, String location ) async {
+  void SignUp(String name, String email, String username, String password, String phone, String location, File image ) async {
     print("j");
     bool? chk;
 
@@ -370,7 +471,7 @@ class _SignUpPageState extends State<SignUpPage> {
       username: username,
       password: password,
       phone: phone,
-      image: "1",
+      image: image.path,
       location: location,
     ));
     print(chk);
@@ -388,7 +489,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
 
   }
-  void CharitySignUp(String name, String email, String password, String phone, String location ) async {
+  void CharitySignUp(String name, String email, String password, String phone, String location, File image) async {
     print("j");
     bool? chk;
 
@@ -403,7 +504,7 @@ class _SignUpPageState extends State<SignUpPage> {
       name: name,
       password: password,
       phone: phone,
-      image: "1",
+      image: image.path ,
       location: location,
     ));
     print(chk);
