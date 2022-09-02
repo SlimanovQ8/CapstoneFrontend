@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:tbr3at/models/annoucement.dart';
 
 import '../../constants/constants.dart';
 
 class ImageFlipper extends StatefulWidget {
-  const ImageFlipper({Key? key}) : super(key: key);
+  final Annoucement annoucement;
+  const ImageFlipper({Key? key, required this.annoucement}) : super(key: key);
 
   @override
   _ImageFlipperState createState() => _ImageFlipperState();
@@ -25,8 +27,8 @@ class _ImageFlipperState extends State<ImageFlipper> {
 
 
 
-                  child: Image.asset(
-                    'assets/images/campaign.jfif',
+                  child: Image.network(
+                    widget.annoucement.image!,
                     width: 100,
                     height: double.infinity,
                     fit: BoxFit.cover,

@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:provider/provider.dart';
+import 'package:tbr3at/providers/announcement_provider.dart';
 import '../../Pages/HomePage.dart';
 
 class Announcement extends StatefulWidget {
-  const Announcement({Key? key}) : super(key: key);
+   int id;
+   Announcement({Key? key,
+    required this.id
+  }) : super(key: key);
 
   @override
   _AnnouncementState createState() => _AnnouncementState();
 }
-List <bool> isClicked = [false, false, false,];
+int daysBetween(DateTime from, DateTime to) {
+  from = DateTime(from.year, from.month, from.day);
+  to = DateTime(to.year, to.month, to.day);
+  return (to.difference(from).inHours / 24).round();
+}
 class _AnnouncementState extends State<Announcement> {
   @override
   Widget build(BuildContext context) {
@@ -18,139 +28,178 @@ class _AnnouncementState extends State<Announcement> {
 
       child: Container(
         margin: EdgeInsets.only(top: 10),
-        child: ListView.builder(
-          padding: EdgeInsets.zero,
-          physics: BouncingScrollPhysics(),
-          itemCount: 3,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => HomePage(),
+        child:     FutureBuilder(
+          future: Provider.of<AnnouncementProvider>(context, listen: false).getAnnoouncements(),
+          builder: (context, dataSnapshot) {
+            if (dataSnapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              if (dataSnapshot.error != null) {
+                print(dataSnapshot.error);
+
+                return const Center(
+                  child: Text('There are no Announcements', style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                );
+              } else {
+                return Consumer<AnnouncementProvider>(
+                  builder: (context, announcementsProvider, child) => Container(
+                    margin: EdgeInsets.only(top: 20),
+                    child:  ListView.builder(
+                      padding: EdgeInsets.zero,
+                      physics: BouncingScrollPhysics(),
+                      itemCount: widget.id == 0? announcementsProvider.announcement.length : announcementsProvider.announcement.where((element) => element.category_name!.id! == widget.id +1).length,
+                      itemBuilder: (context, index) {
+                        final annoucementEndDate = DateTime.parse(announcementsProvider.announcement[index].duration!);
+                        final Date = DateTime.now();
+
+                        int quantity = announcementsProvider.announcement[index].quantity!;
+                        int remaining = announcementsProvider.announcement[index].remaining!;
+                        double Remaining = (quantity - remaining) / quantity;
+                        print(Remaining);
+                        final remainingDays = daysBetween(Date, annoucementEndDate);
+
+                        return GestureDetector(
+                          onTap: () {
+                            context.push("/detailpage", extra: announcementsProvider.announcement[index]);
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: 10, right: 10, bottom: 15, top: 0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(top: 20, left: 10, right: 10),
+                                    child: Stack(
+                                      children: [
+                                        ClipRRect(
+                                          child: Image(
+                                            height: 180,
+                                            width: width,
+                                            fit: BoxFit.fitWidth,
+                                            image: NetworkImage(
+                                                announcementsProvider.announcement[index].image!),
+                                          ),
+                                        ),
+
+                                      ],
+                                    ),
+                                  ),
+
+                                  Container(
+
+
+
+                                    padding: EdgeInsets.only(left: 8, top: 8),
+
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          announcementsProvider.announcement[index].name!,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 4,
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        LinearPercentIndicator(
+                                          width: MediaQuery.of(context).size.width - 50,
+                                          animation: true,
+
+                                          lineHeight: 23.0,
+                                          animationDuration: 1500,
+                                          percent: Remaining,
+                                          center: Text("${Remaining * 100}%"),
+                                          linearStrokeCap: LinearStrokeCap.roundAll,
+                                          progressColor: Color(0xff24a6b4),
+                                        ),
+
+                                      ],
+                                    ),
+
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(left: 8, right: 30, top: 20),
+
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+
+                                              child: Text(
+                                                announcementsProvider.announcement[index].charity_name!.name!,
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+
+                                            Container(
+                                             child: Icon(Icons.announcement,
+                                               color:
+                                               announcementsProvider.announcement[index].priority == "High" ? Colors.red :
+                                               announcementsProvider.announcement[index].priority == "Medium" ? Colors.orange :
+                                                   Colors.green
+                                             ),
+
+                                            ),
+                                            Container(
+                                              child: Text(
+                                                " ${remainingDays} Days Left",
+                                                //overflow: TextOverflow.ellipsis,
+
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Color(0xffbababa),
+
+                                                ),
+                                              ),
+                                            ),
+
+                                          ],
+
+                                        ),
+
+                                        SizedBox(
+                                          height: 20,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 );
-              },
-              child: Padding(
-                padding: EdgeInsets.only(
-                    left: 10, right: 10, bottom: 15, top: 0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 20, left: 10, right: 10),
-                        child: Stack(
-                          children: [
-                            ClipRRect(
-                              child: Image(
-                                height: 180,
-                                width: width,
-                                fit: BoxFit.fitWidth,
-                                image: AssetImage(
-                                    "assets/images/campaign.jfif"),
-                              ),
-                            ),
-
-                          ],
-                        ),
-                      ),
-
-                      Container(
-
-
-
-                        padding: EdgeInsets.only(left: 8, top: 8),
-
-                        child: Row(
-                          children: [
-                            Text(
-                              'Humanity For Palestine',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 4,
-                      ),
-                      Container(
-                        child: Row(
-                          children: [
-                            LinearPercentIndicator(
-                              width: MediaQuery.of(context).size.width - 50,
-                              animation: true,
-
-                              lineHeight: 23.0,
-                              animationDuration: 4000,
-                              percent: 0.7,
-                              center: Text("70.0%"),
-                              linearStrokeCap: LinearStrokeCap.roundAll,
-                              progressColor: Color(0xff24a6b4),
-                            ),
-
-                          ],
-                        ),
-
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(left: 8, right: 30, top: 20),
-
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-
-                                  child: Text(
-                                    'KD 3500/5000',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-
-                                Container(
-                                  child: Text(
-                                    "5 Days Left",
-                                    //overflow: TextOverflow.ellipsis,
-
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Color(0xffbababa),
-
-                                    ),
-                                  ),
-                                ),
-
-                              ],
-
-                            ),
-
-                            SizedBox(
-                              height: 20,
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
+              }
+            }
           },
         ),
+
+
       ),
     );
   }
