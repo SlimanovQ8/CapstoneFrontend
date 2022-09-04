@@ -9,6 +9,7 @@ class User {
   String? username;
   String? password;
   bool? isCharity;
+  bool? isUser;
   String? location;
   String? description;
   String? charityname;
@@ -29,6 +30,7 @@ class User {
     this.description,
     this.charityname,
     this.isCharity,
+    this.isUser,
     this.phone,
     this.location,
     this.rating,

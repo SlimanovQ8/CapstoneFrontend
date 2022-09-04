@@ -197,7 +197,7 @@ class _LoginPageState extends State<LoginPage> {
     print("j");
 
     print("j");
-    bool? chk;
+    int? chk;
 
     setState(() {
       _isLoading = true;
@@ -210,9 +210,18 @@ class _LoginPageState extends State<LoginPage> {
     ));
 
     print(chk);
-    if (chk)
+    if (chk == 2)
     {
-      context.push("/homepage");
+      context.push("/homepage", );
+      setState(() {
+        _isLoading = false;
+      });
+
+    }
+
+    else if (chk == 1)
+    {
+      context.push("/charityHomePage", );
       setState(() {
         _isLoading = false;
       });

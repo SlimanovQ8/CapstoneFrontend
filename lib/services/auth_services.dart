@@ -88,7 +88,7 @@ class AuthServices {
   Future<List<User>> getUsers(int id) async {
     List<User> users = [];
     try {
-      Response response = await _dio.get(_baseUrl + '/users-list/');
+      Response response = await _dio.get(_baseUrl + '/users-all/');
       users =
           (response.data as List).map((user) => User.fromJson(user)).where((element) =>  element.id == id).toList();
       for(int i = 0; i < users.length; i ++ )

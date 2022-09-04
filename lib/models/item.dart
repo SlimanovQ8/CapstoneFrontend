@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:tbr3at/models/category.dart';
 import 'package:tbr3at/models/charity.dart';
+import 'package:tbr3at/models/user.dart';
 part 'item.g.dart';
 @JsonSerializable()
 
@@ -13,6 +14,7 @@ class Item {
   bool? isReserved;
   Charity? charity_name;
   Category? category_name;
+  User? created_by;
 
   Item({
     this.id,
@@ -23,6 +25,7 @@ class Item {
     this.isReserved,
     this.charity_name,
     this.category_name,
+    this.created_by,
   });
 
 

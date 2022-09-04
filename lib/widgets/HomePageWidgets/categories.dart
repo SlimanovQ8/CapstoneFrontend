@@ -49,7 +49,7 @@ class _CategoriesState extends State<Categories> {
                       child: ListView.builder(
                         physics: BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
-                        itemCount: category.categories.length,
+                        itemCount: 4,
                         itemBuilder: (context, index) {
                           return GestureDetector(
 
@@ -68,14 +68,15 @@ class _CategoriesState extends State<Categories> {
                                 padding: EdgeInsets.symmetric(horizontal: appPadding / 2),
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                      color: selectedCategoryIndex == index ? Colors.transparent : Color(0xffe3e3e3)
+                                      color: selectedCategoryIndex == index ? Colors.transparent : Colors.black38
                                   ),
                                   color:
                                   selectedCategoryIndex == index ? AppButtons : Color(0xfffefefe),
                                 ),
                                 child: Center(
                                   child: Text(
-                                    category.categories[index].name!,
+                                    index == 1 ? "All" :
+                                    category.categories[index].description!,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16.5,

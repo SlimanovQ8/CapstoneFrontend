@@ -29,14 +29,15 @@ class AnnouncementProvider extends ChangeNotifier {
   //   return check;
   // }
   //
-  // Future<bool?> UpdateTrip(int TripID, String title, String description, File image) async {
-  //
-  //   check = await TripsServices().UpdateTrip(TripID: TripID, title: title, description: description, image: image);
-  //   await getTrips();
-  //   notifyListeners();
-  //
-  //   return check;
-  // }
+  Future<bool?> Donate(
+      {required int amount, required int AnnouncementID, required int DonaterID, required int points, required int numOfDonation}) async {
+
+    check = await AnnouncementServices().Donate(amount: amount, AnnouncementID: AnnouncementID, DonaterID: DonaterID, points: points, numOfDonation: numOfDonation);
+    await getAnnoouncements();
+    notifyListeners();
+
+    return check;
+  }
   //
   // Future<bool?> DeleteTrip(int TripID) async {
   //

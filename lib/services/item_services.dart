@@ -104,27 +104,27 @@ Future<bool> CreateItem({required String name , required String description, req
 //   return check;
 // }
 //
-// Future<bool> DeleteTrip({ required int TripID}) async {
-//   String token = await AuthProvider().getToken();
-//   print(token);
-//   bool check = false;
-//
-//   try {
-//
-//
-//     _dio.options.headers["Authorization"] = "Bearer ${token}";
-//
-//     Response response = await _dio.delete( _testURL + '/trips/${TripID}/delete/');
-//     check = true;
-//
-//
-//
-//   } on DioError catch (error) {
-//     print(error);
-//   }
-//   return check;
-// }
-//
+Future<bool> DeleteItem({ required int ItemID}) async {
+  String token = await AuthProvider().getToken();
+  print(token);
+  bool check = false;
+
+  try {
+
+
+    _dio.options.headers["Authorization"] = "Bearer ${token}";
+
+    Response response = await _dio.delete( _testURL + '/item/${ItemID}/delete/');
+    check = true;
+
+
+
+  } on DioError catch (error) {
+    print(error);
+  }
+  return check;
+}
+
 // Future<bool> getUserTrip({ required int UserID}) async {
 //   String token = await AuthProvider().getToken();
 //   print(token);

@@ -14,7 +14,7 @@ class AuthProvider extends ChangeNotifier {
   late User user;
   late UserProfile profile;
   List <UserProfile> getUseProfile = [];
-  bool isSignedIn = false;
+  int isSignedIn = 1;
   List <User> users = [];
 
   Future <void> getUsers(int id) async {
@@ -23,7 +23,7 @@ class AuthProvider extends ChangeNotifier {
   Future <void> getUserProfile(int id) async {
      getUseProfile = await AuthServices().getUsserInfo(id);
   }
-  Future <bool> signup({required User user}) async {
+  Future <int> signup({required User user}) async {
     token = await AuthServices().signup(user: user);
 
 
@@ -31,12 +31,9 @@ class AuthProvider extends ChangeNotifier {
 
 
 
-    if(isSignedIn)
-      return true;
-    else
-      return false;
+    return isSignedIn;
   }
-  Future <bool> CharitySignUp({required User user}) async {
+  Future <int> CharitySignUp({required User user}) async {
     token = await AuthServices().Charitysignup(user: user);
 
 
@@ -44,12 +41,9 @@ class AuthProvider extends ChangeNotifier {
 
 
 
-    if(isSignedIn)
-      return true;
-    else
-      return false;
+    return isSignedIn;
   }
-  Future <bool> signin({required User user}) async {
+  Future <int> signin({required User user}) async {
     token = await AuthServices().signin(user: user);
     if(token.length > 2) {
       print("d ${token}");
@@ -61,9 +55,13 @@ class AuthProvider extends ChangeNotifier {
 
       //print(this.user!.username!);
       notifyListeners();
-      return true;
+      if(this.user.isCharity!)
+      return 1;
+      else if(!this.user.isCharity!)
+        return 2;
     }
-    return false;
+
+    return 3;
 
   }
   // Future<bool?> UpdateProfile(int UserID, String Bio, File image) async {

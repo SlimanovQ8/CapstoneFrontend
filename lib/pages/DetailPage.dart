@@ -20,6 +20,9 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   @override
 
+  bool choice1 = false;
+  bool choice2 = false;
+  bool choice3 = false;
   Widget build(BuildContext context) {
     final annoucementEndDate = DateTime.parse(widget.annoucement.duration!);
     final Date = DateTime.now();
@@ -159,7 +162,7 @@ class _DetailPageState extends State<DetailPage> {
                                   animation: true,
 
                                   lineHeight: 7.0,
-                                  trailing: Text("${Remaining * 100} %" ),
+                                  trailing: Text("${double.parse((Remaining.toDouble() * 100).toStringAsFixed(1))} %" ),
                                   animationDuration: 1000,
                                   percent: Remaining,
                                   linearStrokeCap: LinearStrokeCap.roundAll,
@@ -255,7 +258,7 @@ class _DetailPageState extends State<DetailPage> {
         ],
       ),
 
-  bottomNavigationBar: BottomNavBar(),
+  bottomNavigationBar: BottomNavBar(FullAmount: (widget.annoucement.quantity! - Full), remaining: widget.annoucement.remaining!, AnnouncemtID: widget.annoucement.id!,)
 
 
     );

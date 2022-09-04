@@ -19,6 +19,9 @@ Item _$ItemFromJson(Map<String, dynamic> json) => Item(
       category_name: json['category_name'] == null
           ? null
           : Category.fromJson(json['category_name'] as Map<String, dynamic>),
+      created_by: json['created_by'] == null
+          ? null
+          : User.fromJson(json['created_by'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
@@ -30,4 +33,5 @@ Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
       'isReserved': instance.isReserved,
       'charity_name': instance.charity_name,
       'category_name': instance.category_name,
+      'created_by': instance.created_by,
     };

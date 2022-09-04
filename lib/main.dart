@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tbr3at/models/annoucement.dart';
+import 'package:tbr3at/models/user.dart';
 import 'package:tbr3at/pages/AddDonation.dart';
+import 'package:tbr3at/pages/CharityPage.dart';
 import 'package:tbr3at/pages/DetailPage.dart';
 import 'package:tbr3at/pages/EditProfile.dart';
 import 'package:tbr3at/pages/HomePage.dart';
 import 'package:tbr3at/pages/ItemDonate.dart';
 import 'package:tbr3at/pages/LoginPage.dart';
 import 'package:tbr3at/pages/EditProfile.dart';
+import 'package:tbr3at/pages/MyItems.dart';
 import 'package:tbr3at/pages/SignUpPage.dart';
 import 'package:tbr3at/providers/announcement_provider.dart';
 import 'package:tbr3at/providers/category_provider.dart';
@@ -43,13 +46,16 @@ class MyApp extends StatelessWidget {
   }
 
   //AuthProvider ap = AuthProvider();
-  final _router = GoRouter(initialLocation: 1 == 2 ? "/signin" : "/", routes: [
+  final _router = GoRouter(initialLocation: 1 == 2 ? "/signin" : "/signin", routes: [
     // GoRoute(path: "/", builder: (context, state) => SignUpPage()),
-    GoRoute(path: "/", builder: (context, state) => EditProfile()),
+    GoRoute(path: "/", builder: (context, state) => SignUpPage()),
     GoRoute(path: "/signin", builder: (context, state) => LoginPage()),
     GoRoute(path: "/homepage", builder: (context, state) => HomePage()),
     GoRoute(path: "/itemDonate", builder: (context, state) => ItemDonate(CategoryName: state.extra as List <String>,)),
     GoRoute(path: "/detailpage", builder: (context, state) => DetailPage(annoucement: state.extra as Annoucement,)),
-    GoRoute(path: "/detailpage", builder: (context, state) => AddDonationPage()),
+    GoRoute(path: "/addDonation", builder: (context, state) => AddDonationPage()),
+    GoRoute(path: "/charityHomePage", builder: (context, state) => CharityHomePage()),
+    GoRoute(path: "/editProfile", builder: (context, state) => EditProfile()),
+    GoRoute(path: "/MyItems", builder: (context, state) => MyItems(UserID: state.extra as User,)),
   ]);
 }

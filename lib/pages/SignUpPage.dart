@@ -459,7 +459,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
   void SignUp(String name, String email, String username, String password, String phone, String location, File image ) async {
     print("j");
-    bool? chk;
+    int? chk;
 
     setState(() {
       _isLoading = true;
@@ -475,7 +475,7 @@ class _SignUpPageState extends State<SignUpPage> {
       location: location,
     ));
     print(chk);
-    if (chk)
+    if (chk ==1)
       {
         context.push("/homepage");
         setState(() {
@@ -491,7 +491,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
   void CharitySignUp(String name, String email, String password, String phone, String location, File image) async {
     print("j");
-    bool? chk;
+    int? chk;
 
     setState(() {
       _isLoading = true;
@@ -508,9 +508,18 @@ class _SignUpPageState extends State<SignUpPage> {
       location: location,
     ));
     print(chk);
-    if (chk)
+    if (chk == 2)
     {
-      context.push("/homepage");
+      context.push("/homepage", );
+      setState(() {
+        _isLoading = false;
+      });
+
+    }
+
+    else if (chk == 1)
+    {
+      context.push("/charityHomePage", );
       setState(() {
         _isLoading = false;
       });
@@ -519,6 +528,7 @@ class _SignUpPageState extends State<SignUpPage> {
     else {
       _isLoading = false;
     }
+
 
 
   }

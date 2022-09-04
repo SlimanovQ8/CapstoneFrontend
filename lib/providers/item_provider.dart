@@ -39,12 +39,12 @@ Future<bool?> CreateItem(String name, String description, int category_name, Str
 //   return check;
 // }
 //
-// Future<bool?> DeleteTrip(int TripID) async {
-//
-//   check = await TripsServices().DeleteTrip(TripID: TripID);
-//   await getTrips();
-//   notifyListeners();
-//
-//   return check;
-// }
+Future<bool?> DeleteItem(int ItemID) async {
+
+  check = await ItemServices().DeleteItem(ItemID: ItemID);
+  await getAllItems();
+  notifyListeners();
+
+  return check;
+}
 }

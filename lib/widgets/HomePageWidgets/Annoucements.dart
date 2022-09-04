@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:tbr3at/models/annoucement.dart';
 import 'package:tbr3at/providers/announcement_provider.dart';
 import '../../Pages/HomePage.dart';
 
@@ -21,6 +22,7 @@ int daysBetween(DateTime from, DateTime to) {
 }
 class _AnnouncementState extends State<Announcement> {
   @override
+  List <Annoucement> announcement = [];
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Expanded(
@@ -43,26 +45,27 @@ class _AnnouncementState extends State<Announcement> {
                   child: Text('There are no Announcements', style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                 );
               } else {
-                return Consumer<AnnouncementProvider>(
-                  builder: (context, announcementsProvider, child) => Container(
+                widget.id == 0 ? announcement = context.read<AnnouncementProvider>().announcement.toList() : announcement = context.read<AnnouncementProvider>().announcement.where((element) => element.category_name!.id == widget.id).toList();
+                 return Container(
                     margin: EdgeInsets.only(top: 20),
                     child:  ListView.builder(
                       padding: EdgeInsets.zero,
                       physics: BouncingScrollPhysics(),
-                      itemCount: widget.id == 0? announcementsProvider.announcement.length : announcementsProvider.announcement.where((element) => element.category_name!.id! == widget.id +1).length,
+                      itemCount: announcement.length,
                       itemBuilder: (context, index) {
-                        final annoucementEndDate = DateTime.parse(announcementsProvider.announcement[index].duration!);
+                        print("${widget.id}  ${announcement[index].category_name!.name!}");
+                        final annoucementEndDate = DateTime.parse(announcement[index].duration!);
                         final Date = DateTime.now();
 
-                        int quantity = announcementsProvider.announcement[index].quantity!;
-                        int remaining = announcementsProvider.announcement[index].remaining!;
+                        int quantity = announcement[index].quantity!;
+                        int remaining = announcement[index].remaining!;
                         double Remaining = (quantity - remaining) / quantity;
                         print(Remaining);
                         final remainingDays = daysBetween(Date, annoucementEndDate);
 
                         return GestureDetector(
                           onTap: () {
-                            context.push("/detailpage", extra: announcementsProvider.announcement[index]);
+                            context.push("/detailpage", extra: announcement[index]);
                           },
                           child: Padding(
                             padding: EdgeInsets.only(
@@ -84,7 +87,7 @@ class _AnnouncementState extends State<Announcement> {
                                             width: width,
                                             fit: BoxFit.fitWidth,
                                             image: NetworkImage(
-                                                announcementsProvider.announcement[index].image!),
+                                                announcement[index].image!),
                                           ),
                                         ),
 
@@ -101,7 +104,7 @@ class _AnnouncementState extends State<Announcement> {
                                     child: Row(
                                       children: [
                                         Text(
-                                          announcementsProvider.announcement[index].name!,
+                                          announcement[index].name!,
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -123,7 +126,7 @@ class _AnnouncementState extends State<Announcement> {
                                           lineHeight: 23.0,
                                           animationDuration: 1500,
                                           percent: Remaining,
-                                          center: Text("${Remaining * 100}%"),
+                                          center: Text("${double.parse((Remaining.toDouble() * 100).toStringAsFixed(1))}%"),
                                           linearStrokeCap: LinearStrokeCap.roundAll,
                                           progressColor: Color(0xff24a6b4),
                                         ),
@@ -145,7 +148,7 @@ class _AnnouncementState extends State<Announcement> {
                                             Container(
 
                                               child: Text(
-                                                announcementsProvider.announcement[index].charity_name!.name!,
+                                                announcement[index].charity_name!.name!,
                                                 style: TextStyle(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.bold,
@@ -156,8 +159,8 @@ class _AnnouncementState extends State<Announcement> {
                                             Container(
                                              child: Icon(Icons.announcement,
                                                color:
-                                               announcementsProvider.announcement[index].priority == "High" ? Colors.red :
-                                               announcementsProvider.announcement[index].priority == "Medium" ? Colors.orange :
+                                               announcement[index].priority == "High" ? Colors.red :
+                                               announcement[index].priority == "Medium" ? Colors.orange :
                                                    Colors.green
                                              ),
 
@@ -192,7 +195,7 @@ class _AnnouncementState extends State<Announcement> {
                         );
                       },
                     ),
-                  ),
+
                 );
               }
             }
