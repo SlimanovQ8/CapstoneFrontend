@@ -10,6 +10,7 @@ import 'package:tbr3at/models/category.dart';
 import 'package:tbr3at/providers/auth_provider.dart';
 import 'package:tbr3at/providers/category_provider.dart';
 import 'package:tbr3at/widgets/HomePageWidgets/BottomNavBar.dart';
+import 'package:tbr3at/widgets/HomePageWidgets/Items.dart';
 
 import '../classes/CustomAnimatedBottomBar.dart';
 import '../widgets/HomePageWidgets/Annoucements.dart';
@@ -266,7 +267,7 @@ class _CharityHomePageState extends State<CharityHomePage> {
                       Container(
 
                         child: Text(
-                          'Lastest Campaigns',
+                          'Lastest Items',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -291,7 +292,7 @@ class _CharityHomePageState extends State<CharityHomePage> {
 
                   ),
                 ),
-                Announcement(id: selectedCategoryIndex,),
+                ITEM(id: selectedCategoryIndex,),
 
               ],
             ),
@@ -353,7 +354,7 @@ class _CharityHomePageState extends State<CharityHomePage> {
     for (int i = 0; i< c.length; i++)
       CategoryNames.add(c[i].name!);
 
-    context.push("/ItemDonate", extra: CategoryNames);
+    context.push("/createAnnouncement", extra: CategoryNames);
   }
 }
 

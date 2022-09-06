@@ -75,6 +75,64 @@ Future<bool> CreateItem({required String name , required String description, req
   return check;
 }
 
+  Future<bool> CreateReport({required String name , required String description, required int to, required int item}) async {
+    String token = await AuthProvider().getToken();
+    print(token);
+    bool check = false;
+
+    try {
+      FormData data = FormData.fromMap({
+        "title": name,
+        "description": description,
+        "to": to,
+        "item": item
+      });
+      _dio.options.headers["Authorization"] = "Bearer ${token}";
+
+      Response response = await _dio.post(_testURL + '/report/create/',
+
+          data: data);
+      check = true;
+
+
+    //token = response.data["token"];
+  } on DioError catch (error) {
+  print(error);
+  }
+  return check;
+}
+
+  Future<bool> ReserveItem({ required int charity_name, required int ItemID }) async {
+    // String token = await AuthProvider().getToken();
+    // print(token);
+    bool check = false;
+    print('adfcv');
+
+    try {
+
+
+      FormData data = FormData.fromMap({
+        "isReserved": true,
+        "charity_name": charity_name,
+
+      });
+
+      Response response = await _dio.put( _testURL + '/item/${ItemID}/reserve/',
+
+          data: data);
+      check = true;
+
+      print('adfcv');
+
+
+
+    } on DioError catch (error) {
+      print(error);
+    }
+
+    return check;
+  }
+
 // Future<bool> UpdateTrip({ required int TripID,required String title , required String description, required File image}) async {
 //   String token = await AuthProvider().getToken();
 //   print(token);

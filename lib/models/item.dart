@@ -12,7 +12,7 @@ class Item {
   String? image;
   String? condition;
   bool? isReserved;
-  Charity? charity_name;
+  User? charity_name;
   Category? category_name;
   User? created_by;
 

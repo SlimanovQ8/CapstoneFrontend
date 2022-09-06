@@ -15,7 +15,7 @@ Item _$ItemFromJson(Map<String, dynamic> json) => Item(
       isReserved: json['isReserved'] as bool?,
       charity_name: json['charity_name'] == null
           ? null
-          : Charity.fromJson(json['charity_name'] as Map<String, dynamic>),
+          : User.fromJson(json['charity_name'] as Map<String, dynamic>),
       category_name: json['category_name'] == null
           ? null
           : Category.fromJson(json['category_name'] as Map<String, dynamic>),

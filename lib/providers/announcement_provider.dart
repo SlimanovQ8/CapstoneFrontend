@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tbr3at/models/annoucement.dart';
+import 'package:tbr3at/pages/CreateAnnouncement.dart';
 import 'package:tbr3at/providers/category_provider.dart';
 import 'package:tbr3at/services/annoucement_services.dart';
 
@@ -38,13 +40,13 @@ class AnnouncementProvider extends ChangeNotifier {
 
     return check;
   }
-  //
-  // Future<bool?> DeleteTrip(int TripID) async {
-  //
-  //   check = await TripsServices().DeleteTrip(TripID: TripID);
-  //   await getTrips();
-  //   notifyListeners();
-  //
-  //   return check;
-  // }
+
+  Future<bool?> CreateAnnouncement(String name, String description, int category_name, String priority, XFile image, String endDate, int amount) async {
+
+    check = await AnnouncementServices().CreateAnnouncement(name: name, description: description, category_name: category_name, priority: priority, image: image, endDate: endDate, amount: amount);
+    await getAnnoouncements();
+    notifyListeners();
+
+    return check;
+  }
 }

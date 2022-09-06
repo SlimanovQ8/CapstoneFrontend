@@ -475,17 +475,26 @@ class _SignUpPageState extends State<SignUpPage> {
       location: location,
     ));
     print(chk);
-    if (chk ==1)
-      {
-        context.push("/homepage");
-        setState(() {
-          _isLoading = false;
-        });
+    if (chk == 2)
+    {
+      context.push("/homepage", );
+      setState(() {
+        _isLoading = false;
+      });
 
-     }
+    }
+
+    else if (chk == 1)
+    {
+      context.push("/charityHomePage", );
+      setState(() {
+        _isLoading = false;
+      });
+
+    }
     else {
       _isLoading = false;
-      }
+    }
 
 
   }

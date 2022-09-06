@@ -122,7 +122,7 @@ class _MyItemsState extends State<MyItems> {
                                           fontSize: 25
                                         )),
                                     subtitle: Text(
-                                      myItems[index].isReserved!?   "Reserved by: " + "${myItems[index].category_name!.name!}" : " Not Reserved yet!",
+                                      myItems[index].isReserved!?   "Reserved by: " + "${myItems[index].charity_name!.name!}" : " Not Reserved yet!",
                                       style: TextStyle(color: Colors.black, fontSize: 16),
                                     ),
 

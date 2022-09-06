@@ -1,8 +1,12 @@
 import 'dart:io';
 
+import 'package:image_picker/image_picker.dart';
 import 'package:tbr3at/models/annoucement.dart';
 import 'package:dio/dio.dart';
+import 'package:tbr3at/pages/CreateAnnouncement.dart';
 import 'package:tbr3at/widgets/HomePageWidgets/Annoucements.dart';
+
+import '../providers/auth_provider.dart';
 
 class AnnouncementServices {
   final Dio _dio = Dio();
@@ -37,64 +41,46 @@ class AnnouncementServices {
   //   }
   //   return trips;
   // }
-  // Future<bool> CreateTrip({required String title , required String description, required File image}) async {
-  //   String token = await AuthProvider().getToken();
-  //   print(token);
-  //   bool check = false;
-  //
-  //   try {
-  //
-  //
-  //     FormData data = FormData.fromMap({
-  //       "title": title,
-  //       "description": description,
-  //
-  //       "image": await MultipartFile.fromFile(image.path),
-  //       "usernake": "username",
-  //
-  //     });
-  //     _dio.options.headers["Authorization"] = "Bearer ${token}";
-  //
-  //     Response response = await _dio.post( _testURL + '/trips/create/',
-  //
-  //         data: data);
-  //     check = true;
-  //
-  //
-  //
-  //     //token = response.data["token"];
-  //   } on DioError catch (error) {
-  //     print(error);
-  //   }
-  //   return check;
-  // }
-  //
+  Future<bool> CreateAnnouncement({required String name , required String description, required int category_name, required String priority,required XFile image, required String endDate, required int amount }) async {
+    String token = await AuthProvider().getToken();
+    print(token);
+    bool check = false;
+
+    try {
+
+
+      FormData data = FormData.fromMap({
+        "name": name,
+        "description": description,
+        "image": await MultipartFile.fromFile(image.path),
+        "category_name": category_name,
+        "priority": priority,
+        "duration": endDate,
+        "quantity": amount,
+        "remaining": amount,
+
+      });
+      _dio.options.headers["Authorization"] = "Bearer ${token}";
+
+      Response response = await _dio.post( _testURL + '/announcement/create/',
+
+          data: data);
+      check = true;
+
+
+
+      //token = response.data["token"];
+    } on DioError catch (error) {
+      print(error);
+    }
+    return check;
+  }
   Future<bool> Donate({ required int amount, required int AnnouncementID, required int DonaterID, required int points, required int numOfDonation}) async {
     // String token = await AuthProvider().getToken();
     // print(token);
     bool check = false;
     print('adfcv');
 
-    try {
-
-
-      FormData data = FormData.fromMap({
-        "remaining": amount,
-
-     });
-
-      Response response = await _dio.put( _testURL + '/announcement/donate/${AnnouncementID}/',
-
-          data: data);
-      check = true;
-
-      print('adfcv');
-
-
-
-    } on DioError catch (error) {
-      print(error);
-    }
     try {
 
 
